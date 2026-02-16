@@ -1,0 +1,10 @@
+{
+    "validLogin": {
+        "user_name": "testerbootcamp16@gmail.com",
+        "password": "Test1234!"
+    },
+    "invalidLogin": {
+        "user_name": "mukti@nugrohoarie.cloud",
+        "password": "SecurePassword123!"
+    }
+}
