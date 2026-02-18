@@ -15,3 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import 'cypress-xpath';
+
+// Ignore uncaught exceptions dari third-party scripts Shopify (CAPTCHA, analytics, dll)
+Cypress.on('uncaught:exception', (err) => {
+    // Return false supaya Cypress tidak gagal karena error dari Shopify
+    return false
+})
