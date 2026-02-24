@@ -4,7 +4,7 @@ module.exports = defineConfig({
   allowCypressEnv: false,
 
   e2e: {
-    baseUrl: 'https://sauce-demo.myshopify.com',
+    baseUrl: 'https://saucedemo.com',
     chromeWebSecurity: false,
     setupNodeEvents(on, config) {
       // implement node event listeners here
