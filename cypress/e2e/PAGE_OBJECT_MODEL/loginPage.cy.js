@@ -1,7 +1,7 @@
 /**
  * =====================================================
  * PAGE OBJECT MODEL TEST - LOGIN PAGE
- * Website: https://sauce-demo.myshopify.com/account/login
+ * Website: https://www.saucedemo.com/
  * POM    : cypress/support/POM/LoginPage.js
  * Data   : cypress/fixtures/users/loginUsers.json
  * =====================================================
@@ -28,7 +28,6 @@ describe('Page Object Model - Login Page', () => {
 
         loginPage.visit()
         loginPage.login(user_name, password)
-        cy.wait(100000)
         loginPage.verifyLoginSuccess()
     })
 

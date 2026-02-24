@@ -1,7 +1,7 @@
 /**
  * =====================================================
  * PAGE OBJECT MODEL - CART PAGE
- * Website: https://sauce-demo.myshopify.com/cart
+ * Website: https://www.saucedemo.com/cart.html
  * =====================================================
  */
 
@@ -11,31 +11,35 @@ class CartPage {
     // ELEMENTS
     // ═══════════════════════════════════════════════
     get pageTitle() {
-        return cy.contains('My Cart');
+        return cy.get('.title')
     }
 
     get checkoutButton() {
-        return cy.get('input[type="submit"][name="checkout"], button[name="checkout"]').first()
+        return cy.get('[data-test="checkout"]')
     }
 
-    get cartTable() {
-        return cy.get('div.six > div.info > h3');
+    get cartItem() {
+        return cy.get('.cart_item')
     }
 
-    get headerCheckoutLink() {
-        return cy.xpath('//a[normalize-space()="Check Out"]');
+    get cartItemName() {
+        return cy.get('.inventory_item_name')
+    }
+
+    get headerCartLink() {
+        return cy.get('.shopping_cart_link')
     }
 
     // ═══════════════════════════════════════════════
     // ACTIONS
     // ═══════════════════════════════════════════════
     visit() {
-        cy.visit('/cart')
-        cy.url().should('include', '/cart')
+        cy.visit('https://www.saucedemo.com/cart.html')
+        cy.url().should('include', '/cart.html')
     }
 
     clickHeaderCheckout() {
-        this.headerCheckoutLink.click()
+        this.headerCartLink.click()
     }
 
     clickCheckoutButton() {
@@ -46,15 +50,15 @@ class CartPage {
     // ASSERTIONS
     // ═══════════════════════════════════════════════
     verifyCartPage() {
-        this.pageTitle.should('be.visible')
+        this.pageTitle.should('contain.text', 'Your Cart')
     }
 
     verifyProductInCart(productName) {
-        this.cartTable.should('contain.text', productName)
+        this.cartItemName.should('contain.text', productName)
     }
 
     verifyCheckoutPage() {
-        cy.url().should('include', '/checkouts')
+        cy.url().should('include', '/checkout-step-one.html')
     }
 }
 

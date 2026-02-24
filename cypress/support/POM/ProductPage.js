@@ -1,7 +1,7 @@
 /**
  * =====================================================
  * PAGE OBJECT MODEL - PRODUCT DETAIL PAGE
- * Website: https://sauce-demo.myshopify.com/products/[slug]
+ * Website: https://www.saucedemo.com/inventory-item.html
  * =====================================================
  */
 
@@ -11,15 +11,15 @@ class ProductPage {
     // ELEMENTS
     // ═══════════════════════════════════════════════
     get productTitle() {
-        return cy.get('h1')
+        return cy.get('.inventory_details_name')
     }
 
     get addToCartButton() {
-        return cy.get('input[type="submit"][value="Add to Cart"], button[type="submit"]').first()
+        return cy.get('[data-test^="add-to-cart"]')
     }
 
-    get quantityField() {
-        return cy.get('input[name="quantity"]')
+    get backButton() {
+        return cy.get('[data-test="back-to-products"]')
     }
 
     // ═══════════════════════════════════════════════
@@ -29,8 +29,8 @@ class ProductPage {
         this.addToCartButton.click()
     }
 
-    setQuantity(qty) {
-        this.quantityField.clear().type(qty)
+    goBack() {
+        this.backButton.click()
     }
 
     // ═══════════════════════════════════════════════

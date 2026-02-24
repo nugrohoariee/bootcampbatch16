@@ -1,7 +1,7 @@
 /**
  * =====================================================
  * DATA DRIVEN TESTING - LOGIN PAGE
- * Website: https://sauce-demo.myshopify.com/account/login
+ * Website: https://www.saucedemo.com/
  * Data   : cypress/fixtures/users/loginUsers.json
  * =====================================================
  */
@@ -16,26 +16,24 @@ describe('Data Driven Testing - Login Page', () => {
             loginData = data
         })
     })
-
     beforeEach(() => {
-        cy.visit('/account/login')
-        cy.url().should('include', '/account/login')
+        cy.visit('https://www.saucedemo.com/')
+        cy.url().should('include', 'saucedemo.com')
     })
 
     // ═══════════════════════════════════════════════
     // POSITIVE TEST - Login Valid
     // ═══════════════════════════════════════════════
-    it.only('TC01 - Berhasil login dengan kredensial valid', () => {
+    it('TC01 - Berhasil login dengan kredensial valid', () => {
         const { user_name, password } = loginData.validLogin
 
-        cy.get('#customer_email').clear().type(user_name)
-        cy.get('#customer_password').clear().type(password)
-        cy.get('form#customer_login input[type="submit"]').click()
-        cy.wait(100000)
+        cy.get('#user-name').clear().type(user_name)
+        cy.get('#password').clear().type(password)
+        cy.get('#login-button').click()
 
-        // Validasi: redirect ke halaman account
-        cy.url().should('include', '/account')
-        cy.url().should('not.include', '/login')
+        // Validasi: redirect ke halaman inventory
+        cy.url().should('include', '/inventory.html')
+        cy.url().should('not.include', 'saucedemo.com/$')
     })
 
     // ═══════════════════════════════════════════════
@@ -44,11 +42,12 @@ describe('Data Driven Testing - Login Page', () => {
     it('TC02 - Gagal login dengan kredensial tidak valid', () => {
         const { user_name, password } = loginData.invalidLogin
 
-        cy.get('#customer_email').clear().type(user_name)
-        cy.get('#customer_password').clear().type(password)
-        cy.get('form#customer_login input[type="submit"]').click()
+        cy.get('#user-name').clear().type(user_name)
+        cy.get('#password').clear().type(password)
+        cy.get('#login-button').click()
 
         // Validasi: tetap di halaman login & muncul pesan error
-        cy.url().should('include', '/login')
+        cy.url().should('eq', 'https://www.saucedemo.com/')
+        cy.get('[data-test="error"]').should('be.visible')
     })
 })

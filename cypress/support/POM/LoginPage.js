@@ -1,7 +1,7 @@
 /**
  * =====================================================
  * PAGE OBJECT MODEL - LOGIN PAGE
- * Website: https://sauce-demo.myshopify.com/account/login
+ * Website: https://www.saucedemo.com/
  * =====================================================
  * Class ini berisi semua element & action untuk halaman login
  * =====================================================
@@ -12,32 +12,36 @@ class LoginPage {
     // ═══════════════════════════════════════════════
     // ELEMENTS (Selectors)
     // ═══════════════════════════════════════════════
-    get emailField() {
-        return cy.get('#customer_email')
+    get usernameField() {
+        return cy.get('#user-name')
     }
 
     get passwordField() {
-        return cy.get('#customer_password')
+        return cy.get('#password')
     }
 
     get submitButton() {
-        return cy.get('form#customer_login input[type="submit"]')
+        return cy.get('#login-button')
     }
 
     get loginForm() {
-        return cy.get('form#customer_login')
+        return cy.get('.login-box')
+    }
+
+    get errorMessage() {
+        return cy.get('[data-test="error"]')
     }
 
     // ═══════════════════════════════════════════════
     // ACTIONS (Methods)
     // ═══════════════════════════════════════════════
     visit() {
-        cy.visit('/account/login')
-        cy.url().should('include', '/account/login')
+        cy.visit('https://www.saucedemo.com/')
+        cy.url().should('include', 'saucedemo.com')
     }
 
-    fillEmail(email) {
-        this.emailField.clear().type(email)
+    fillUsername(username) {
+        this.usernameField.clear().type(username)
     }
 
     fillPassword(password) {
@@ -48,8 +52,8 @@ class LoginPage {
         this.submitButton.click()
     }
 
-    login(email, password) {
-        this.fillEmail(email)
+    login(username, password) {
+        this.fillUsername(username)
         this.fillPassword(password)
         this.clickSubmit()
     }
@@ -58,12 +62,16 @@ class LoginPage {
     // ASSERTIONS (Validasi)
     // ═══════════════════════════════════════════════
     verifyLoginSuccess() {
-        cy.url().should('include', '/account')
-        cy.url().should('not.include', '/login')
+        cy.url().should('include', '/inventory.html')
     }
 
     verifyLoginFailed() {
-        cy.url().should('include', '/login')
+        cy.url().should('eq', 'https://www.saucedemo.com/')
+        this.errorMessage.should('be.visible')
+    }
+
+    verifySubmitButton() {
+        this.submitButton.should('be.visible')
     }
 }
 

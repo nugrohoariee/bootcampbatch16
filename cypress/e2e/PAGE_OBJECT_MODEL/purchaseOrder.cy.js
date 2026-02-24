@@ -1,10 +1,10 @@
 /**
  * =====================================================
  * PAGE OBJECT MODEL TEST - PURCHASE ORDER FLOW
- * Website: https://sauce-demo.myshopify.com
+ * Website: https://www.saucedemo.com
  * =====================================================
- * Flow: Visit Catalog → Pilih Product → Add to Cart
- *       → Klik Header Checkout → Klik Button Checkout
+ * Flow: Login → Visit Catalog → Pilih Product → Add to Cart
+ *       → Klik Header Cart → Verifikasi Cart → Klik Checkout
  * =====================================================
  * POM Files:
  *   - cypress/support/POM/CatalogPage.js
@@ -17,34 +17,33 @@ import CatalogPage from '../../support/POM/CatalogPage'
 import ProductPage from '../../support/POM/ProductPage'
 import CartPage from '../../support/POM/CartPage'
 
-describe('Purchase Order Flow - Guest User', () => {
+describe('Purchase Order Flow - Sauce Demo', () => {
 
     const catalogPage = new CatalogPage()
     const productPage = new ProductPage()
     const cartPage = new CartPage()
 
-    it('TC01 - Guest user dapat melakukan purchase order', () => {
+    it('TC01 - User dapat melakukan purchase order', () => {
 
-        // Step 1: Visit halaman Catalog
+        // Step 1: Login & Visit halaman Catalog (Inventory)
         catalogPage.visit()
         catalogPage.verifyCatalogPage()
 
-        // Step 2: Pilih product "Grey jacket"
-        catalogPage.selectProduct('Grey jacket')
-        productPage.verifyProductPage('Grey jacket')
+        // Step 2: Pilih product "Sauce Labs Backpack"
+        catalogPage.selectProduct('Sauce Labs Backpack')
+        productPage.verifyProductPage('Sauce Labs Backpack')
 
         // Step 3: Add to Cart
         productPage.addToCart()
-        cy.wait(5000)
 
-        // Step 4: Klik menu header "Check Out" untuk ke halaman Cart
+        // Step 4: Klik cart icon di header untuk ke halaman Cart
         cartPage.clickHeaderCheckout()
         cartPage.verifyCartPage()
 
         // Step 5: Verifikasi product ada di cart
-        cartPage.verifyProductInCart('Grey jacket')
+        cartPage.verifyProductInCart('Sauce Labs Backpack')
 
-        // Step 6: Klik button Checkout di halaman My Cart
+        // Step 6: Klik button Checkout di halaman Cart
         cartPage.clickCheckoutButton()
 
         // Step 7: Verifikasi redirect ke halaman checkout
