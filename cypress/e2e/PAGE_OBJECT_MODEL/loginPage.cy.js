@@ -1,24 +1,23 @@
 /**
  * =====================================================
- * DATA DRIVEN TESTING - LOGIN PAGE
+ * PAGE OBJECT MODEL TEST - LOGIN PAGE
  * Website: https://www.saucedemo.com/
+ * POM    : cypress/support/POM/LoginPage.js
  * Data   : cypress/fixtures/users/loginUsers.json
  * =====================================================
  */
 
-describe('Data Driven Testing - Login Page', () => {
+import LoginPage from '../../support/POM/LoginPage'
 
-    // Load data dari file JSON
+describe('Page Object Model - Login Page', () => {
+
+    const loginPage = new LoginPage()
     let loginData
 
     before(() => {
         cy.fixture('users/loginUsers').then((data) => {
             loginData = data
         })
-    })
-    beforeEach(() => {
-        cy.visit('https://www.saucedemo.com/')
-        cy.url().should('include', 'saucedemo.com')
     })
 
     // ═══════════════════════════════════════════════
@@ -27,13 +26,9 @@ describe('Data Driven Testing - Login Page', () => {
     it('TC01 - Berhasil login dengan kredensial valid', () => {
         const { user_name, password } = loginData.validLogin
 
-        cy.get('#user-name').clear().type(user_name)
-        cy.get('#password').clear().type(password)
-        cy.get('#login-button').click()
-
-        // Validasi: redirect ke halaman inventory
-        cy.url().should('include', '/inventory.html')
-        cy.url().should('not.include', 'saucedemo.com/$')
+        loginPage.visit()
+        loginPage.login(user_name, password)
+        loginPage.verifyLoginSuccess()
     })
 
     // ═══════════════════════════════════════════════
@@ -42,12 +37,8 @@ describe('Data Driven Testing - Login Page', () => {
     it('TC02 - Gagal login dengan kredensial tidak valid', () => {
         const { user_name, password } = loginData.invalidLogin
 
-        cy.get('#user-name').clear().type(user_name)
-        cy.get('#password').clear().type(password)
-        cy.get('#login-button').click()
-
-        // Validasi: tetap di halaman login & muncul pesan error
-        cy.url().should('eq', 'https://www.saucedemo.com/')
-        cy.get('[data-test="error"]').should('be.visible')
+        loginPage.visit()
+        loginPage.login(user_name, password)
+        loginPage.verifyLoginFailed()
     })
 })
