@@ -1,10 +1,3 @@
-/**
- * =====================================================
- * DATA DRIVEN TESTING - LOGIN PAGE
- * Website: https://www.saucedemo.com/
- * Data   : cypress/fixtures/users/loginUsers.json
- * =====================================================
- */
 
 describe('Data Driven Testing - Login Page', () => {
 

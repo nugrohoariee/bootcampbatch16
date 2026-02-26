@@ -73,6 +73,36 @@ class LoginPage {
     verifySubmitButton() {
         this.submitButton.should('be.visible')
     }
+
+    // ═══════════════════════════════════════════════
+    // METHOD DENGAN IF-ELSE OPERATOR
+    // ═══════════════════════════════════════════════
+    /**
+     * Login dan verifikasi hasil berdasarkan expectedResult
+     * Menggunakan operator if-else untuk menentukan assertion
+     * @param {string} username 
+     * @param {string} password 
+     * @param {string} expectedResult - 'success' | 'locked' | 'failed'
+     */
+    loginAndVerify(username, password, expectedResult) {
+        this.fillUsername(username)
+        this.fillPassword(password)
+        this.clickSubmit()
+
+        // ── IF-ELSE: Menentukan validasi berdasarkan expectedResult ──
+        if (expectedResult === 'success') {
+            // Jika login berhasil → redirect ke halaman inventory
+            cy.url().should('include', '/inventory.html')
+        } else if (expectedResult === 'locked') {
+            // Jika user terkunci → error message berisi "locked out"
+            this.errorMessage.should('be.visible')
+            this.errorMessage.should('contain', 'locked out')
+        } else {
+            // Untuk semua kasus gagal lainnya → tetap di halaman login
+            cy.url().should('eq', 'https://www.saucedemo.com/')
+            this.errorMessage.should('be.visible')
+        }
+    }
 }
 
 export default LoginPage
