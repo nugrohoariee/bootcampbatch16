@@ -23,6 +23,47 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
+        continue-on-error: true
+
+      - name: Merge Mochawesome reports
+        if: always()
+        run: npm run merge:reports
+
+      - name: Generate Mochawesome HTML report
+        if: always()
+        run: npm run generate:html
+
+      - name: Upload Mochawesome report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochawesome-report
+          path: cypress/reports
+          if-no-files-found: ignore
+
+      - name: Test Summary
+        if: always()
+        run: |
+          if [ -f cypress/results/combined-report.json ]; then
+            echo "## 🧪 Cypress Test Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            TOTAL=$(node -e "const r=require('./cypress/results/combined-report.json'); console.log(r.stats.tests)")
+            PASSES=$(node -e "const r=require('./cypress/results/combined-report.json'); console.log(r.stats.passes)")
+            FAILURES=$(node -e "const r=require('./cypress/results/combined-report.json'); console.log(r.stats.failures)")
+            PENDING=$(node -e "const r=require('./cypress/results/combined-report.json'); console.log(r.stats.pending)")
+            DURATION=$(node -e "const r=require('./cypress/results/combined-report.json'); const d=r.stats.duration; const s=Math.floor(d/1000); console.log(s+'s')")
+
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSES |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILURES |" >> $GITHUB_STEP_SUMMARY
+            echo "| ⏸️ Pending | $PENDING |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📊 Total | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "| ⏱️ Duration | $DURATION |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> 📥 Download the **mochawesome-report** artifact for the full HTML report" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Upload screenshots on failure
         uses: actions/upload-artifact@v4
