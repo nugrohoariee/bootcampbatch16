@@ -9,12 +9,12 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.url().should('include', 'saucedemo.com')
     })
 
-    it('should visit the inventory page (after login)', () => {
+    it.only('should visit the inventory page (after login)', () => {
       cy.visit('https://www.saucedemo.com/')
       cy.get('#user-name').type('standard_user')
       cy.get('#password').type('secret_sauce')
       cy.get('#login-button').click()
-      cy.url().should('include', '/inventory.html')
+      cy.location('pathname').should('eq', '/inventory.html');
     })
 
     it('should visit the cart page (after login)', () => {
@@ -23,7 +23,7 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.get('#password').type('secret_sauce')
       cy.get('#login-button').click()
       cy.get('.shopping_cart_link').click()
-      cy.url().should('include', '/cart.html')
+      cy.url().should('eq', 'https://www.saucedemo.com/cart.html')
     })
   })
 
@@ -168,7 +168,7 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.get('#user-name').type('standard_user')
       cy.wait(1000) // Tunggu 1 detik
       cy.get('#password').type('secret_sauce')
-      cy.wait(1000) // Tunggu 1 detik
+      cy.wait(10000) // Tunggu 10 detik
       cy.get('#user-name').should('have.value', 'standard_user')
       cy.get('#password').should('have.value', 'secret_sauce')
     })
@@ -177,8 +177,7 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.visit('https://www.saucedemo.com/')
       cy.get('#user-name').type('standard_user')
       cy.get('#password').type('secret_sauce')
-      cy.get('#login-button').click()
-      cy.wait(2000) // Tunggu halaman selesai load
+      cy.get('#login-button').click({ timeout: 10000 })
       cy.url().should('include', '/inventory.html')
       cy.get('.title').should('contain.text', 'Products')
     })

@@ -2,10 +2,18 @@
   "scripts": {
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run",
+    "delete:reports": "node -e \"const fs=require('fs');const p='cypress/results';if(fs.existsSync(p)){fs.readdirSync(p).forEach(f=>fs.rmSync(p+'/'+f,{recursive:true,force:true}));}\"",
+    "pretest": "npm run delete:reports",
+    "merge:reports": "npx mochawesome-merge cypress/results/mochawesome*.json > cypress/results/combined-report.json",
+    "generate:html": "npx marge cypress/results/combined-report.json --reportDir cypress/reports",
+    "final:report": "npm run merge:reports && npm run generate:html"
   },
   "devDependencies": {
     "cypress": "^15.10.0",
-    "cypress-xpath": "^2.0.1"
+    "cypress-xpath": "^2.0.1",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2"
   }
 }
