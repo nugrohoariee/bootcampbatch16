@@ -1,16 +1,39 @@
 /**
  * =====================================================
- * PAGE OBJECT MODEL - LOGIN PAGE
+ * PAGE OBJECT MODEL - LOGIN PAGE (WITH INHERITANCE)
  * Website: https://www.saucedemo.com/
  * =====================================================
- * Class ini berisi semua element & action untuk halaman login
+ * Class ini EXTENDS BasePage (mewarisi semua method parent)
+ * 
+ * INHERITANCE yang terjadi:
+ *   - LoginPage mewarisi: visit(), verifyPage(), verifyUrl(),
+ *     goToCart(), pageTitle, logPageInfo(), takeScreenshot()
+ *   - LoginPage menambahkan: element & method khusus login
+ *   - LoginPage OVERRIDE: visit() → karena login page perlu
+ *     validasi URL yang berbeda
  * =====================================================
  */
 
-class LoginPage {
+import BasePage from './BasePage'
+
+class LoginPage extends BasePage {
 
     // ═══════════════════════════════════════════════
-    // ELEMENTS (Selectors)
+    // CONSTRUCTOR - Memanggil super() dari BasePage
+    // ═══════════════════════════════════════════════
+    /**
+     * super('/', 'Swag Labs') artinya:
+     *   - Panggil constructor BasePage
+     *   - Set this.url = '/'
+     *   - Set this.title = 'Swag Labs'
+     *   - Set this.baseUrl = 'https://www.saucedemo.com'
+     */
+    constructor() {
+        super('/', 'Swag Labs')
+    }
+
+    // ═══════════════════════════════════════════════
+    // ELEMENTS (Khusus LoginPage)
     // ═══════════════════════════════════════════════
     get usernameField() {
         return cy.get('#user-name')
@@ -33,13 +56,8 @@ class LoginPage {
     }
 
     // ═══════════════════════════════════════════════
-    // ACTIONS (Methods)
+    // ACTIONS (Khusus LoginPage)
     // ═══════════════════════════════════════════════
-    visit() {
-        cy.visit('https://www.saucedemo.com/')
-        cy.url().should('include', 'saucedemo.com')
-    }
-
     fillUsername(username) {
         this.usernameField.clear().type(username)
     }
@@ -52,6 +70,9 @@ class LoginPage {
         this.submitButton.click()
     }
 
+    /**
+     * Method gabungan: isi username, password, lalu klik login
+     */
     login(username, password) {
         this.fillUsername(username)
         this.fillPassword(password)
@@ -59,7 +80,7 @@ class LoginPage {
     }
 
     // ═══════════════════════════════════════════════
-    // ASSERTIONS (Validasi)
+    // ASSERTIONS (Khusus LoginPage)
     // ═══════════════════════════════════════════════
     verifyLoginSuccess() {
         cy.url().should('include', '/inventory.html')
@@ -70,16 +91,8 @@ class LoginPage {
         this.errorMessage.should('be.visible')
     }
 
-    verifySubmitButton() {
-        this.submitButton.should('be.visible')
-    }
-
-    // ═══════════════════════════════════════════════
-    // METHOD DENGAN IF-ELSE OPERATOR
-    // ═══════════════════════════════════════════════
     /**
      * Login dan verifikasi hasil berdasarkan expectedResult
-     * Menggunakan operator if-else untuk menentukan assertion
      * @param {string} username 
      * @param {string} password 
      * @param {string} expectedResult - 'success' | 'locked' | 'failed'
@@ -89,16 +102,12 @@ class LoginPage {
         this.fillPassword(password)
         this.clickSubmit()
 
-        // ── IF-ELSE: Menentukan validasi berdasarkan expectedResult ──
         if (expectedResult === 'success') {
-            // Jika login berhasil → redirect ke halaman inventory
             cy.url().should('include', '/inventory.html')
         } else if (expectedResult === 'locked') {
-            // Jika user terkunci → error message berisi "locked out"
             this.errorMessage.should('be.visible')
             this.errorMessage.should('contain', 'locked out')
         } else {
-            // Untuk semua kasus gagal lainnya → tetap di halaman login
             cy.url().should('eq', 'https://www.saucedemo.com/')
             this.errorMessage.should('be.visible')
         }

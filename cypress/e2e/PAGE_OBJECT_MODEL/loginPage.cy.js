@@ -1,11 +1,4 @@
-/**
- * =====================================================
- * PAGE OBJECT MODEL TEST - LOGIN PAGE
- * Website: https://www.saucedemo.com/
- * POM    : cypress/support/POM/LoginPage.js
- * Data   : cypress/fixtures/users/loginUsers.json
- * =====================================================
- */
+
 
 import LoginPage from '../../support/POM/LoginPage'
 
