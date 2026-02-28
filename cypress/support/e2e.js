@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import './CUSTOM_COMMAND/loginCommands'
 import 'cypress-xpath';
 
 // Ignore uncaught exceptions dari third-party scripts Shopify (CAPTCHA, analytics, dll)
