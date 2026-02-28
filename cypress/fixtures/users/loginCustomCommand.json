@@ -1,0 +1,38 @@
+{
+    "validLogin": {
+        "user_name": "standard_user",
+        "password": "secret_sauce"
+    },
+    "invalidLogin": {
+        "user_name": "invalid_user",
+        "password": "wrong_password"
+    },
+    "lockedUser": {
+        "user_name": "locked_out_user",
+        "password": "secret_sauce"
+    },
+    "emptyUser": {
+        "user_name": "",
+        "password": ""
+    },
+    "allScenarios": [
+        {
+            "title": "Login Valid",
+            "user_name": "standard_user",
+            "password": "secret_sauce",
+            "expected": "success"
+        },
+        {
+            "title": "Login Invalid",
+            "user_name": "invalid_user",
+            "password": "wrong_password",
+            "expected": "failed"
+        },
+        {
+            "title": "Locked User",
+            "user_name": "locked_out_user",
+            "password": "secret_sauce",
+            "expected": "locked"
+        }
+    ]
+}
