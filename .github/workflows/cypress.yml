@@ -134,7 +134,7 @@ jobs:
           if-no-files-found: ignore
 
   # ──────────────────────────────────────────────
-  # Job 3: GenerateAllure Report
+  # Job 4: GenerateAllure Report
   # ──────────────────────────────────────────────
   generate-allure-report:
     runs-on: ubuntu-latest
