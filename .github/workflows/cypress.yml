@@ -59,7 +59,7 @@ jobs:
           browser: chrome
           install: true
         env:
-          allure:true
+          allure: true
         continue-on-error: true
 
       - name: Upload test results
