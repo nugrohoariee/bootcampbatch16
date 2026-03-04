@@ -10,6 +10,8 @@
     "final:report": "npm run merge:reports && npm run generate:html"
   },
   "devDependencies": {
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "allure-commandline": "^2.37.0",
     "cypress": "^15.10.0",
     "cypress-xpath": "^2.0.1",
     "mochawesome": "^7.1.4",

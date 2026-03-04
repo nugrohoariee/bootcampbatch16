@@ -1,23 +1,4 @@
-/**
- * =====================================================
- * TEST CASE - PURCHASE ORDER (DENGAN INHERITANCE)
- * Website: https://www.saucedemo.com
- * =====================================================
- * Test ini mendemonstrasikan FULL FLOW purchase order
- * menggunakan POM yang sudah INHERITANCE dari BasePage.
- * 
- * PERBANDINGAN: POM Lama vs POM Inheritance
- * ┌──────────────────────────────────┬──────────────────────────────────┐
- * │ POM LAMA (tanpa inheritance)     │ POM BARU (dengan inheritance)    │
- * ├──────────────────────────────────┼──────────────────────────────────┤
- * │ Setiap page tulis pageTitle      │ pageTitle diwarisi dari BasePage │
- * │ Setiap page tulis visit()       │ visit() diwarisi dari BasePage   │
- * │ Tidak ada constructor            │ Constructor + super() di tiap    │
- * │                                  │ page menyimpan URL & title       │
- * │ Tidak bisa sharing method        │ Method bisa di-share via parent  │
- * └──────────────────────────────────┴──────────────────────────────────┘
- * =====================================================
- */
+
 
 import LoginPage from '../../support/POM_INHERITANCE/LoginPage'
 import CatalogPage from '../../support/POM_INHERITANCE/CatalogPage'
@@ -60,7 +41,7 @@ describe('Purchase Order DDT - POM Inheritance Demo', () => {
 
         cy.log('═══ CONSTRUCTOR PROPERTIES ═══')
 
-        // 🔷 Semua property ini berasal dari CONSTRUCTOR (via super())
+        // Semua property ini berasal dari CONSTRUCTOR (via super())
         cy.log(`LoginPage    → url: "${loginPage.url}", title: "${loginPage.title}"`)
         cy.log(`CatalogPage  → url: "${catalogPage.url}", title: "${catalogPage.title}"`)
         cy.log(`ProductPage  → url: "${productPage.url}", title: "${productPage.title}"`)

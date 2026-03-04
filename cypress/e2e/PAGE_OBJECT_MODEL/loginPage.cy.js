@@ -33,5 +33,6 @@ describe('Page Object Model - Login Page', () => {
         loginPage.visit()
         loginPage.login(user_name, password)
         loginPage.verifyLoginFailed()
+
     })
 })
