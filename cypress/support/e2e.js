@@ -17,6 +17,8 @@
 import './commands'
 import './CUSTOM_COMMAND/loginCommands'
 import 'cypress-xpath';
+import "@shelex/cypress-allure-plugin";
+
 
 // Ignore uncaught exceptions dari third-party scripts Shopify (CAPTCHA, analytics, dll)
 Cypress.on('uncaught:exception', (err) => {

@@ -17,7 +17,7 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.location('pathname').should('eq', '/inventory.html');
     })
 
-    it('should visit the cart page (after login)', () => {
+    it.only('should visit the cart page (after login)', () => {
       cy.visit('https://www.saucedemo.com/')
       cy.get('#user-name').type('standard_user')
       cy.get('#password').type('secret_sauce')

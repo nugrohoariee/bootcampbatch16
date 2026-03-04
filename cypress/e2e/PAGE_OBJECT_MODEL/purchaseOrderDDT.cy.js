@@ -1,23 +1,4 @@
-/**
- * =====================================================
- * PAGE OBJECT MODEL + DATA DRIVEN TESTING
- * PURCHASE ORDER FLOW
- * Website: https://www.saucedemo.com
- * =====================================================
- * Flow: Login → Catalog → Pilih Product → Add to Cart
- *       → Cart → Checkout Step 1 (Info) → Checkout Step 2 (Overview)
- *       → Checkout Complete → Back to Inventory
- * =====================================================
- * POM Files:
- *   - cypress/support/POM/LoginPage.js
- *   - cypress/support/POM/CatalogPage.js
- *   - cypress/support/POM/ProductPage.js
- *   - cypress/support/POM/CartPage.js
- *   - cypress/support/POM/CheckoutPage.js
- * Data (DDT):
- *   - cypress/fixtures/checkout/purchaseOrder.json
- * =====================================================
- */
+
 
 import LoginPage from '../../support/POM/LoginPage'
 import CatalogPage from '../../support/POM/CatalogPage'
