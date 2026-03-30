@@ -182,5 +182,5 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.get('.title').should('contain.text', 'Products')
     })//test
   })
-
+//Test trigger
 })
