@@ -180,7 +180,7 @@ describe('Basic Selector & Actions - Sauce Demo', () => {
       cy.get('#login-button').click({ timeout: 10000 })
       cy.url().should('include', '/inventory.html')
       cy.get('.title').should('contain.text', 'Products')
-    })
+    })//test
   })
 
 })
